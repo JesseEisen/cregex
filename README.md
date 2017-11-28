@@ -12,7 +12,7 @@ $ ./test
 
 ## Example
 
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,7 +44,7 @@ int main(void)
 
 Then we compile and run it.
 
-```
+```bash
 $ valgrind --leak-check=full ./example
   
   ==15963== Memcheck, a memory error detector

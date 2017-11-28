@@ -23,11 +23,18 @@ typedef struct {
  int        eflag;
  char       **matched;
  char       errbuf[ERR_BUF_SIZE];
-}cregex_t;
-  
+} cregex_t;
+ 
+
+#define cregex_set_cflag(self, flag)  (self)->cflag = (flag)
+#define cregex_set_eflag(self, flag)  (self)->eflag = (flag)
+//max match for regex group
+#define cregex_set_nmatch(self, num)  (self)->nmatch = (num) 
+#define cregex_get_err(self)          (self)->errbuf
 
 void cregex_init(cregex_t *, int );
 int  cregex_match(cregex_t *, char *, char *);
+int  cregex_match_all(cregex_t *, char *, char *);
 void cregex_dump_match(cregex_t *);
 char *cregex_get_match(cregex_t *, int);
 void cregex_free(cregex_t *);

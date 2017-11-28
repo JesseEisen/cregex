@@ -18,6 +18,7 @@
 #define cregex_set_cflag(self, flag)  self->cflag = (flag)
 #define cregex_set_eflag(self, flag)  self->eflag = (flag)
 #define cregex_get_err(self)          self->errbuf
+
 /*
  * strdup 
  */
@@ -32,6 +33,9 @@ strdup(const char *str) {
     return buf;
 }
 
+/*
+ * init cregex structure
+ */
 
 void 
 cregex_init(cregex_t *self, int nmatch) {
@@ -43,7 +47,11 @@ cregex_init(cregex_t *self, int nmatch) {
 }
 
 
-int
+/*
+ * main regex parse body
+ */
+
+static int
 cregex_parse(cregex_t *self) {
   int res, i, size, nmatched;
   regmatch_t *group;
@@ -91,6 +99,11 @@ cregex_parse(cregex_t *self) {
   return 0;
 }
 
+
+/*
+ * match 
+ */
+
 int 
 cregex_match(cregex_t *self, char *pattern, char *string) {
   self->pattern = strdup(pattern);
@@ -100,6 +113,11 @@ cregex_match(cregex_t *self, char *pattern, char *string) {
     
   return TRUE;
 }
+
+
+/*
+ * dump current self matched
+ */
 
 void
 cregex_dump_match(cregex_t *self) {
@@ -112,12 +130,22 @@ cregex_dump_match(cregex_t *self) {
     printf("\n");
 }
 
+
+/*
+ *  get match by index
+ */
+
 char *
 cregex_get_match(cregex_t *self, int index) {
     if (index < 0 || index > self->nmatched - 1)  return NULL;
 
     return self->matched[index];
 }
+
+
+/*
+ * free 
+ */
 
 void 
 cregex_free(cregex_t *self) {

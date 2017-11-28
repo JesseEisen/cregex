@@ -13,6 +13,7 @@
 
 #define more 16
 
+
 /*
  * Strdup 
  */
@@ -55,7 +56,10 @@ cregex_parse(cregex_t *self) {
   self->nmatched = 0;
   
   self->matched = malloc(sizeof(char *) * self->nmatch);
-  if(!self->matched) return 0;
+  if(!self->matched) {
+      sprintf(self->errbuf, "malloc error");
+      return -1;
+  }
 
   group   = self->match_group;
   matched = self->matched; 
@@ -94,7 +98,10 @@ cregex_parse_all(cregex_t *self) {
   self->nmatched = 0;
   
   self->matched = malloc(sizeof(char *) * self->nmatch);
-  if(!self->matched) return 0;
+  if(!self->matched) {
+      sprintf(self->errbuf, "malloc error");
+      return -1;
+  }
 
   temp     = self->string;
   group    = self->match_group;
@@ -137,7 +144,10 @@ cregex_exec(cregex_t *self) {
   int res;
   
   self->comp = malloc(sizeof(regex_t) + more);
-  if(!self->comp)  return 0;
+  if(!self->comp)  {
+      sprintf(self->errbuf, "malloc error");
+      return -1;
+  }
 
   res = regcomp(self->comp, self->pattern, self->cflag);
   if(res) {
@@ -146,7 +156,10 @@ cregex_exec(cregex_t *self) {
   }
 
   self->match_group = malloc(sizeof(regmatch_t) * self->nmatch);
-  if(!self->match_group)  return -1;
+  if(!self->match_group)  {
+      sprintf(self->errbuf, "malloc error");
+      return -1;
+  }
 
   res = regexec(self->comp, 
                 self->string, 
@@ -173,8 +186,8 @@ cregex_match(cregex_t *self, char *pattern, char *string) {
   self->pattern = Strdup(pattern);
   self->string  = Strdup(string);
 
-  if((res = cregex_exec(self))  <= 0) return res;
-  if((res = cregex_parse(self)) <= 0) return res;
+  if((res = cregex_exec(self))  < 0) return res;
+  if((res = cregex_parse(self)) < 0) return res;
   
   return res;
 }
@@ -190,7 +203,7 @@ cregex_match_all(cregex_t *self, char *pattern, char *string) {
     self->pattern = Strdup(pattern);
     self->string  = Strdup(string);
 
-    if((res = cregex_exec(self)) <= 0)     return res;
+    if((res = cregex_exec(self)) < 0)      return res;
     if((res = cregex_parse_all(self)) < 0) return res;
 
     return res;

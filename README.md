@@ -1,6 +1,6 @@
 ##  Introduction
 
-This is wrapper of c standard lib `regex.h`. And it still in progress.
+This is a wrapper of c standard lib `regex.h`. And it is still in progress.
 
 
 ## Build And Test
@@ -76,7 +76,7 @@ $ valgrind --leak-check=full ./example
 
 Here are some interfaces can use outside. But more maybe provided.
 
-```
+```c
 void cregex_init(cregex_t *, int );
 int  cregex_match(cregex_t *, char *, char *);
 int  cregex_match_all(cregex_t *, char *, char *);
@@ -87,7 +87,7 @@ void cregex_free(cregex_t *);
 
 And some macros used to set some items
 
-```
+```c
 cregex_set_cflag(self, flag)  
 cregex_set_eflag(self, flag)  
 cregex_set_nmatch(self, num)  
@@ -100,5 +100,5 @@ More about `cflag` and `eflag` can refer `man regex`.
 
 (The MIT License)
 
-Copyright (c) 2017 lkchen <lkchan0719@gmail.com>
+Copyright (c) 2017 JesseChen <lkchan0719@gmail.com>
 

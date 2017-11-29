@@ -196,6 +196,7 @@ cregex_match(cregex_t *self, char *pattern, char *string) {
 /*
  * match all
  */
+
 int 
 cregex_match_all(cregex_t *self, char *pattern, char *string) {
     int res;

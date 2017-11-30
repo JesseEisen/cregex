@@ -11,7 +11,7 @@ example: $(ESRC) $(OBJ)
 	$(CC) $(CFLAGS) -o $@  $(OBJ)
 
 %.o: %.c
-	$(CC) -c -o $@ $(CFLAGS)
+	$(CC) $< -c -o $@ $(CFLAGS)
 
 .PHONY=clean example
 clean:
